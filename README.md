@@ -12,4 +12,6 @@ or
 curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: */*' -F "file=@temp.xls" 'http://localhost:8080/rest/upload'  
 ```
 
+更换Mongodb后，本地需要安装Mongodb
+
 ctjsoft.com
