@@ -1,18 +1,22 @@
 package com.ctjsoft.xh.changancentre.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+
 import java.beans.Transient;
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.Date;
 
-@Entity
+//@Entiy
 public class DocumentMetaData implements Serializable {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -25,6 +29,7 @@ public class DocumentMetaData implements Serializable {
     }
 
     public DocumentMetaData(String name, String fileLocation, Date lastModified) {
+        this.setId(System.currentTimeMillis());
         this.setLastModified(lastModified);
         this.setName(name);
         this.setFileLocation(fileLocation);
@@ -43,6 +48,8 @@ public class DocumentMetaData implements Serializable {
         this.name = name;
     }
 
+    public void setId(Long id){ this.id = id;}
+
     public Date getLastModified() {
         return lastModified;
     }
@@ -53,5 +60,9 @@ public class DocumentMetaData implements Serializable {
 
     public String getFileLocation() {
         return fileLocation;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

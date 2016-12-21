@@ -3,7 +3,7 @@ package com.ctjsoft.xh.changancentre.service;
 import com.ctjsoft.xh.changancentre.dao.DocumentFileSystemRepository;
 import com.ctjsoft.xh.changancentre.model.Document;
 import com.ctjsoft.xh.changancentre.model.DocumentMetaData;
-import com.ctjsoft.xh.changancentre.repository.DocumentMetaDataRepository;
+import com.ctjsoft.xh.changancentre.repository.MongoMetaDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,11 @@ public class FileUploadService {
     @Autowired
     DocumentFileSystemRepository documentFileSystemRepository;
 
+    //@Autowired
+    //DocumentMetaDataRepository documentRepository;
+
     @Autowired
-    DocumentMetaDataRepository documentRepository;
+    MongoMetaDataRepository mongoMetaDataRepository;
 
     public void upload(MultipartFile file) throws IOException {
 
@@ -33,6 +36,7 @@ public class FileUploadService {
         Document document = new Document(fileName, content);
         DocumentMetaData documentMetaData = new DocumentMetaData(fileName, fileStorageLocation, currentDate);
         documentFileSystemRepository.add(document);
-        documentRepository.save(documentMetaData);
+        //documentRepository.save(documentMetaData);
+        mongoMetaDataRepository.save(documentMetaData);
     }
 }
