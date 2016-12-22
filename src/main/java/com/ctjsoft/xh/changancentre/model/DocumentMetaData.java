@@ -6,34 +6,47 @@ package com.ctjsoft.xh.changancentre.model;
 //import javax.persistence.Id;
 import org.springframework.data.annotation.Id;
 
-import java.beans.Transient;
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-//@Entiy
+
 public class DocumentMetaData implements Serializable {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
-    private Long id;
+    static String PRODUCT_PROJECT = "product";
+    static String PRIVATE_PROJECT = "private";
 
-    private String name;
 
+    //文件名称，包含路径
+    private String projectName;
+
+    //最后修改时间
     private Date lastModified;
 
+    //存储根位置
     private String fileLocation;
+
+    //工程版本
+    @Id
+    private String porjectVersion;
+
+    //文件列表
+    private List<ProjectFileMetaData> fileDataList;
+
+    //工程属性：私有还是公有
+    private String projectType;
+
 
     public DocumentMetaData() {
     }
 
-    public DocumentMetaData(String name, String fileLocation, Date lastModified) {
-        this.setId(System.currentTimeMillis());
-        this.setLastModified(lastModified);
-        this.setName(name);
-        this.setFileLocation(fileLocation);
-
+    public DocumentMetaData(String projectName, Date lastModified, String fileLocation, String porjectVersion, String projectType) {
+        this.projectName = projectName;
+        this.lastModified = lastModified;
+        this.fileLocation = fileLocation;
+        this.porjectVersion = porjectVersion;
+        this.projectType = projectType;
     }
 
     public void setLastModified(Date lastModified) {
@@ -44,25 +57,55 @@ public class DocumentMetaData implements Serializable {
         this.fileLocation = fileLocation;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(Long id){ this.id = id;}
 
     public Date getLastModified() {
         return lastModified;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getPorjectVersion() {
+        return porjectVersion;
+    }
+
+    public void setPorjectVersion(String porjectVersion) {
+        this.porjectVersion = porjectVersion;
+    }
+
+    public List<ProjectFileMetaData> getFileDataList() {
+        return fileDataList;
+    }
+
+    public void setFileDataList(List<ProjectFileMetaData> fileDataList) {
+        this.fileDataList = fileDataList;
+    }
+
+    public String getProjectType() {
+        return projectType;
+    }
+
+    public void setProjectType(String projectType) {
+        this.projectType = projectType;
     }
 
     public String getFileLocation() {
         return fileLocation;
     }
 
-    public Long getId() {
-        return id;
+    public String getStoreUrl(){
+        return this.getFileLocation() + "/" + this.getProjectName() + "/" + this.getProjectType() + "/" + this.getPorjectVersion();
+    }
+
+    public void putProjectFile(ProjectFileMetaData fileMetaData) {
+        if(this.getFileDataList()==null){
+            this.fileDataList = new ArrayList<>();
+        }
+        this.getFileDataList().add(fileMetaData);
     }
 }

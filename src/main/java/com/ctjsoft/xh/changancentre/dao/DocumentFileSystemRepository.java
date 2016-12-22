@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface DocumentFileSystemRepository {
 
-    public void add(Document document) throws IOException;
+    public void add(String filePath,Document document) throws IOException;
 }
