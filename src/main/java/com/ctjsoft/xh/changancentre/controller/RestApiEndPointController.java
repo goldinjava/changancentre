@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/")
 public class RestApiEndPointController {
 
     private static final Logger LOG = Logger.getLogger(RestApiEndPointController.class);
