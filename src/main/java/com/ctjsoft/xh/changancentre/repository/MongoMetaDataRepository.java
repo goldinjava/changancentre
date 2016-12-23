@@ -2,7 +2,6 @@ package com.ctjsoft.xh.changancentre.repository;
 
 import com.ctjsoft.xh.changancentre.model.DocumentMetaData;
 
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

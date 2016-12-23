@@ -1,7 +1,7 @@
 # changancentre
 长安资源中心
 
->如果没有mongodb，先安装mongodb(Homebrew环境示例：)
+>如果没有mongodb，先安装mongodb(Homebrew环境示例：)  
 >brew install mongodb
 
 
@@ -15,7 +15,7 @@ http://localhost:8080/swagger-ui.html
 or
 
 ```
-curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: */*' -F "file=@temp.xls" 'http://localhost:8080/rest/upload'  
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: */*' -F "file=@temp.xls" 'http://localhost:8080/upload'  
 ```
 
 
