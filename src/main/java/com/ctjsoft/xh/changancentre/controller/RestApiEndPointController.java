@@ -2,6 +2,7 @@ package com.ctjsoft.xh.changancentre.controller;
 
 import com.ctjsoft.xh.changancentre.facade.RestServieResourceFacade;
 import com.ctjsoft.xh.changancentre.model.DocumentMetaData;
+import com.ctjsoft.xh.changancentre.model.HttpMessage;
 import com.ctjsoft.xh.changancentre.model.ProjectFileMetaData;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +26,22 @@ public class RestApiEndPointController {
     RestServieResourceFacade restServieResourceFacade;
 
     @RequestMapping(value = "/projects/{projectName}/{projectVersion}/file", method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public ResponseEntity<?> upload(@RequestPart(value = "file", required = true) MultipartFile file,@PathVariable String projectVersion) throws IOException {
+    public ResponseEntity<HttpMessage> upload(@RequestPart(value = "file", required = true) MultipartFile file,@PathVariable String projectVersion) throws IOException {
 
         if (!file.isEmpty()) {
             restServieResourceFacade.upload(projectVersion,file);
-            return new ResponseEntity<>(new HttpHeaders(), HttpStatus.CREATED);
+            HttpMessage message = new HttpMessage(projectVersion + " 版本上传成功！");
+            return new ResponseEntity<HttpMessage>(message,new HttpHeaders(), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        HttpMessage errormessage = new HttpMessage(projectVersion + " 版本上传失败！");
+        return new ResponseEntity<HttpMessage>(errormessage,new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value="/projects/{projectName}/{projectVersion:.+}",method = RequestMethod.POST)
-    public ResponseEntity<?> createVersion(@PathVariable String projectName,@PathVariable String projectVersion,@RequestParam(value = "type",defaultValue = "product") String projectType){
+    public ResponseEntity<HttpMessage> createVersion(@PathVariable String projectName,@PathVariable String projectVersion,@RequestParam(value = "type",defaultValue = "product") String projectType){
         restServieResourceFacade.createVersion(projectName,projectVersion,projectType);
-        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.CREATED);
+        HttpMessage message = new HttpMessage(projectVersion + " 版本创建成功！");
+        return new ResponseEntity<HttpMessage>(message,new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value="/projects/{projectName}",method = RequestMethod.GET)
